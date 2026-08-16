@@ -1,0 +1,71 @@
+﻿@page
+@model TodoAppWithLogin.Pages.Todos.IndexModel
+@{
+    ViewData["Title"] = "My Todos";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+}
+
+<h4>Add a todo</h4>
+<form asp-page="Index" method="post" asp-page-handler="Add" class="form-inline">
+    <input asp-for="Input.Text" class="form-control" placeholder="What needs to be done?" />
+    <button type="submit" class="btn btn-primary">
+        <i class="bi bi-plus"></i>
+        Add
+    </button>
+</form>
+
+<h4>Current Todo's</h4>
+
+@if (!Model.Todos.Any())
+{
+    <p class="empty">The list is empty</p>
+}
+else
+{
+    <ul class="list-unstyled">
+        @foreach (var todo in Model.Todos)
+        {
+            <li>
+
+                <!-- Toggle complete -->
+                <form method="post" asp-page-handler="Toggle" asp-route-id="@todo.Id" class="d-inline">
+                    <button type="submit" class="btn btn-sm btn-link p-0 me-2" title="Toggle complete">
+                        @(todo.IsComplete ? "✅" : "⬜")
+                    </button>
+                </form>
+
+                <!-- Delete -->
+                <form method="post" asp-page="Index" asp-page-handler="Delete" style="display: inline">
+                    <input type="hidden" name="Id" value="@todo.Id" />
+                    <button type="submit" class="btn btn-link">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </form>
+
+                <!-- Edit (inline prompt) -->
+                <form method="post" asp-page="Index" asp-page-handler="Edit" style="display: inline">
+                    <input type="hidden" name="Id" value="@todo.Id" />
+                    <button type="submit" class="btn btn-link">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                </form>
+                @todo.Description
+            </li>
+        }
+    </ul>
+}
+<style>
+    .validation-summary-errors ul {
+        list-style-type: none;
+        color: red;
+        padding: 0;
+        margin: 0;
+    }
+
+    .empty {
+        color: lightgray;
+    }
+</style>
