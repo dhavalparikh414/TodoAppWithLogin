@@ -1,0 +1,14 @@
+# Visual Studio
+.vs/
+
+# Build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+
+# Rider / VS Code (optional, if you ever use them)
+.idea/
+.vscode/
