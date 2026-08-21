@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer;
 using TodoAppWithLogin.Data;
 using TodoAppWithLogin.Models;
 namespace TodoAppWithLogin
@@ -14,7 +13,7 @@ namespace TodoAppWithLogin
 
             //Database Configuration
             var dbConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-            builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(dbConnectionString));
+            builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(dbConnectionString));
 
 
             builder.Services.AddIdentity<Users, IdentityRole>(options =>
