@@ -9,10 +9,10 @@
 }
 
 <h4>Add a todo</h4>
-<form asp-page="Index" method="post" asp-page-handler="Add" class="form-inline">
-    <input asp-for="Input.Text" class="form-control" placeholder="What needs to be done?" />
-    <button type="submit" class="btn btn-primary">
-        <i class="bi bi-plus"></i>
+<form asp-page="Index" method="post" asp-page-handler="Add" class="d-flex gap-2 mb-4">
+    <input asp-for="Input.Text" class="form-control flex-grow-1" placeholder="What needs to be done?" />
+    <button type="submit" class="btn btn-primary text-nowrap">
+        <i class="bi bi-plus-lg"></i>
         Add
     </button>
 </form>
@@ -46,9 +46,10 @@ else
                 </form>
 
                 <!-- Edit (inline prompt) -->
-                <form method="post" asp-page="Index" asp-page-handler="Edit" style="display: inline">
+                <form method="post" asp-page="Index" asp-page-handler="Edit" id="editForm-@todo.Id" style="display: inline">
                     <input type="hidden" name="Id" value="@todo.Id" />
-                    <button type="submit" class="btn btn-link">
+                    <input type="hidden" name="editedText" id="editedText-@todo.Id" />
+                    <button type="button" class="btn btn-link edit-btn" data-id="@todo.Id" data-text="@todo.Description">
                         <i class="bi bi-pencil"></i>
                     </button>
                 </form>
@@ -69,3 +70,19 @@ else
         color: lightgray;
     }
 </style>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('.edit-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const id = this.dataset.id;
+                const currentText = this.dataset.text;
+                const newText = prompt("Edit todo:", currentText);
+                if (newText !== null && newText.trim() !== "") {
+                    document.getElementById("editedText-" + id).value = newText;
+                    document.getElementById("editForm-" + id).submit();
+                }
+            });
+        });
+    </script>
+}
