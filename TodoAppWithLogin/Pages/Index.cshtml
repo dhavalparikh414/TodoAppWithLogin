@@ -17,3 +17,65 @@
 <div class="text-center">
 	<p class="lead"> New to the app? <a href="/Account/Register">Sign up</a> now!</p>
 </div>
+
+<!-- Scrolling motivational quotes banner -->
+<div class="quote-marquee">
+    <div class="quote-marquee-track">
+        <span class="quote-item">"The secret of getting ahead is getting started." — Mark Twain</span>
+        <span class="quote-item">"Organizing is what you do before you do something, so that when you do it, it is not all mixed up." — A.A. Milne</span>
+        <span class="quote-item">"Plan your work, then work your plan."</span>
+        <span class="quote-item">"A goal without a plan is just a wish." — Antoine de Saint-Exupéry</span>
+        <span class="quote-item">"For every minute spent organizing, an hour is earned."</span>
+        <span class="quote-item">"You don't have to be great to start, but you have to start to be great." — Zig Ziglar</span>
+        <span class="quote-item">"Done is better than perfect."</span>
+        <span class="quote-item">"Small daily improvements lead to staggering long-term results."</span>
+
+        <!-- duplicate set for seamless looping -->
+        <span class="quote-item">"The secret of getting ahead is getting started." — Mark Twain</span>
+        <span class="quote-item">"Organizing is what you do before you do something, so that when you do it, it is not all mixed up." — A.A. Milne</span>
+        <span class="quote-item">"Plan your work, then work your plan."</span>
+        <span class="quote-item">"A goal without a plan is just a wish." — Antoine de Saint-Exupéry</span>
+        <span class="quote-item">"For every minute spent organizing, an hour is earned."</span>
+        <span class="quote-item">"You don't have to be great to start, but you have to start to be great." — Zig Ziglar</span>
+        <span class="quote-item">"Done is better than perfect."</span>
+        <span class="quote-item">"Small daily improvements lead to staggering long-term results."</span>
+    </div>
+</div>
+
+<style>
+    .quote-marquee {
+        overflow: hidden;
+        white-space: nowrap;
+        background-color: #f8f9fa;
+        border-top: 1px solid #e9ecef;
+        border-bottom: 1px solid #e9ecef;
+        padding: 12px 0;
+    }
+
+    .quote-marquee-track {
+        display: inline-flex;
+        animation: scroll-left 45s linear infinite;
+    }
+
+    .quote-marquee:hover .quote-marquee-track {
+        animation-play-state: paused;
+    }
+
+    .quote-item {
+        display: inline-block;
+        padding: 0 3rem;
+        font-style: italic;
+        color: #495057;
+        font-size: 0.95rem;
+    }
+
+    @@keyframes scroll-left {
+        from {
+            transform: translateX(0);
+        }
+
+        to {
+            transform: translateX(-50%);
+        }
+    }
+</style>
