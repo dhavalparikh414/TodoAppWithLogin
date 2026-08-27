@@ -46,13 +46,18 @@ else
                 </form>
 
                 <!-- Edit (inline prompt) -->
-                <form method="post" asp-page="Index" asp-page-handler="Edit" id="editForm-@todo.Id" style="display: inline">
+@*                 <form method="post" asp-page="Index" asp-page-handler="Edit" id="editForm-@todo.Id" style="display: inline">
                     <input type="hidden" name="Id" value="@todo.Id" />
                     <input type="hidden" name="editedText" id="editedText-@todo.Id" />
                     <button type="button" class="btn btn-link edit-btn" data-id="@todo.Id" data-text="@todo.Description">
                         <i class="bi bi-pencil"></i>
                     </button>
-                </form>
+                </form> *@
+
+                <a asp-page="/Todos/Edit" asp-route-id="@todo.Id" class="btn btn-link">
+                    <i class="bi bi-pencil"></i>
+                </a>
+
                 @todo.Description
             </li>
         }
@@ -71,7 +76,7 @@ else
     }
 </style>
 
-@section Scripts {
+@* @section Scripts {
     <script>
         document.querySelectorAll('.edit-btn').forEach(btn => {
             btn.addEventListener('click', function() {
@@ -85,4 +90,4 @@ else
             });
         });
     </script>
-}
+} *@

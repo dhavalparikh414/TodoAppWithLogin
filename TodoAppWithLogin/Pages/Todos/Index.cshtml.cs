@@ -79,20 +79,20 @@ namespace TodoAppWithLogin.Pages.Todos
         }
 
         // Edit todo text
-        public async Task<IActionResult> OnPostEditAsync(int id, string editedText)
-        {
-            var userId = _userManager.GetUserId(User);
-            var todo = await _context.Todos
-                .FirstOrDefaultAsync(t => t.Id == id && t.UserId == userId);
+        //public async Task<IActionResult> OnPostEditAsync(int id, string editedText)
+        //{
+        //    var userId = _userManager.GetUserId(User);
+        //    var todo = await _context.Todos
+        //        .FirstOrDefaultAsync(t => t.Id == id && t.UserId == userId);
 
-            if (todo != null && !string.IsNullOrWhiteSpace(editedText))
-            {
-                todo.Description = editedText;
-                await _context.SaveChangesAsync();
-            }
+        //    if (todo != null && !string.IsNullOrWhiteSpace(editedText))
+        //    {
+        //        todo.Description = editedText;
+        //        await _context.SaveChangesAsync();
+        //    }
 
-            return RedirectToPage();
-        }
+        //    return RedirectToPage();
+        //}
 
         // Delete a todo
         public async Task<IActionResult> OnPostDeleteAsync(int id)
