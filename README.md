@@ -8,11 +8,11 @@ A simple, secure todo list app built with ASP.NET Core Razor Pages. Sign up, log
 
 ## Features
 
-- **Account system** built on ASP.NET Core Identity — sign up with first name, last name, username, and password
-- **Google OAuth sign-in** — log in with your Google account, automatically linked to your email if you already have a password account
-- **Per-user todo lists** — add, edit, toggle complete, and delete todos, scoped strictly to the logged-in user
-- **Responsive UI** built with Bootstrap 5 and Bootstrap Icons
-- Served over **HTTPS** on a custom domain via a CloudFront + Elastic Beanstalk setup
+- **Account system**:built on ASP.NET Core Identity.Sign up with first name, last name, username, and password
+- **Google OAuth sign-in**:log in with your Google account, automatically linked to your email if you already have a password account
+- **Per-user todo lists**:add, edit, toggle complete, and delete todos, scoped strictly to the logged-in user
+- **Responsive UI**:built with Bootstrap 5 and Bootstrap Icons
+- Served over **HTTPS**:on a custom domain via a CloudFront + Elastic Beanstalk setup
 
 ## Tech stack
 
@@ -48,7 +48,7 @@ DNS for the custom domain is managed through Cloudflare (in "DNS only" mode — 
 
 ### Prerequisites
 
-- [.NET 8 SDK](https://dotnet.microsoft.com/download)
+- [.NET 10 SDK](https://dotnet.microsoft.com/download)
 - [PostgreSQL](https://www.postgresql.org/download/) running locally
 - A [Google Cloud OAuth client](https://console.cloud.google.com/) (optional, only needed to test Google sign-in)
 
@@ -56,7 +56,7 @@ DNS for the custom domain is managed through Cloudflare (in "DNS only" mode — 
 
 1. **Clone the repo**
    ```bash
-   git clone https://github.com/<your-username>/TodoAppWithLogin.git
+   git clone https://github.com/dhavalparikh414/TodoAppWithLogin.git
    cd TodoAppWithLogin
    ```
 
