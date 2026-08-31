@@ -4,7 +4,7 @@ A simple, secure todo list app built with ASP.NET Core Razor Pages. Sign up, log
 
 **Live app:** [todoapp.com.au](https://todoapp.com.au)
 
-![TodoApp logo](wwwroot/images/logo-full.png)
+![TodoApp logo](TodoAppWithLogin/wwwroot/images/logo-full.png)
 
 ## Features
 
