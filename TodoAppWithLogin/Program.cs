@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TodoAppWithLogin.Data;
@@ -9,7 +10,6 @@ namespace TodoAppWithLogin
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
 
             //Database Configuration
             var dbConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -40,6 +40,25 @@ namespace TodoAppWithLogin
             //builder.Services.AddScoped<IUserService, UserService>();
 
             var app = builder.Build();
+
+            // google authentication redirect_uri_mismatch issue fix 
+
+            /*
+             * This app is behind CloudFront (deployed to aws EB and run behind CloudFront), which terminates HTTPS and forwards to EB over plain HTTP this is expected internally.
+             * But ASP.NET Core needs to know the original request was HTTPS, or it'll generate http:// URLs (like this redirect) even though the user's actual connection was secure.
+             * This is a classic "forwarded headers" issue with reverse proxies/CDNs.
+             */
+
+            /*
+             * This tells ASP.NET Core to trust the X-Forwarded-Proto header that CloudFront sends,
+             * so it correctly knows the original request was HTTPS — which fixes the redirect URI generation (and likely other subtle issues, like cookie security flags) app-wide,
+             * not just for this one OAuth flow.
+             */
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
