@@ -66,5 +66,13 @@ namespace TodoAppWithLogin.Pages.Account
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return Page();
         }
+
+        public IActionResult OnPostExternalLogin(string provider, string? returnUrl = null)
+        {
+            var redirectUrl = Url.Page("./ExternalLoginCallback", pageHandler: null, values: new { returnUrl });
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            return new ChallengeResult(provider, properties);
+        }
+
     }
 }

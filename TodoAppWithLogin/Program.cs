@@ -23,6 +23,16 @@ namespace TodoAppWithLogin
             })
     .AddEntityFrameworkStores<AppDbContext>();
 
+            // Add Authentication
+
+            // Google
+            builder.Services.AddAuthentication()
+    .AddGoogle(options =>
+    {
+        options.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
+        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
+    });
+
             // Add services to the container.
             builder.Services.AddRazorPages();
 
