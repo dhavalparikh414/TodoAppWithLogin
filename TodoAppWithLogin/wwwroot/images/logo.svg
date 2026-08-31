@@ -1,0 +1,13 @@
+<svg width="680" height="200" viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+<rect width="680" height="200" fill="#ffffff"/>
+<rect x="40" y="40" width="140" height="140" rx="28" fill="#2563eb"/>
+<rect x="64" y="64" width="16" height="16" rx="3" fill="none" stroke="white" stroke-width="2"/>
+<path d="M67 72 L71 76 L77 68" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="90" y="70" width="66" height="4" rx="2" fill="white" opacity="0.9"/>
+<rect x="64" y="100" width="16" height="16" rx="3" fill="none" stroke="white" stroke-width="2" opacity="0.7"/>
+<rect x="90" y="106" width="52" height="4" rx="2" fill="white" opacity="0.6"/>
+<rect x="64" y="136" width="16" height="16" rx="3" fill="none" stroke="white" stroke-width="2" opacity="0.7"/>
+<rect x="90" y="142" width="60" height="4" rx="2" fill="white" opacity="0.6"/>
+<text x="200" y="112" font-size="48" font-weight="600" font-family="Arial, sans-serif" fill="#111827">Todo<tspan fill="#2563eb">App</tspan></text>
+<text x="200" y="145" font-size="16" font-family="Arial, sans-serif" fill="#6b7280">Plan today. Achieve tomorrow.</text>
+</svg>
