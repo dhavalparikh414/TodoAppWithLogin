@@ -9,9 +9,9 @@
 }
 
 <h4>Add a todo</h4>
-<form asp-page="Index" method="post" asp-page-handler="Add" class="d-flex gap-2 mb-4">
-    <input asp-for="Input.Text" class="form-control flex-grow-1" placeholder="What needs to be done?" />
-    <input asp-for="Input.DueDate" type="datetime-local" class="form-control" style="max-width: 220px;" />
+<form asp-page="Index" method="post" asp-page-handler="Add" class="d-flex flex-column flex-sm-row gap-2 mb-4">
+    <input asp-for="Input.Text" class="form-control" placeholder="What needs to be done?" />
+    <input asp-for="Input.DueDate" type="datetime-local" class="form-control" />
     <button type="submit" class="btn btn-primary text-nowrap">
         <i class="bi bi-plus-lg"></i>
         Add
@@ -29,12 +29,12 @@ else
     <ul class="list-unstyled">
         @foreach (var todo in Model.Todos)
         {
-            <li>
+            <li class="d-flex align-items-center flex-wrap gap-2 mb-2 pb-2 border-bottom">
 
                 <!-- Toggle complete -->
                 <form method="post" asp-page-handler="Toggle" asp-route-id="@todo.Id" class="d-inline">
                     <button type="submit" class="btn btn-sm btn-link p-0 me-2" title="Toggle complete">
-                        @(todo.IsComplete ? "✅" : "⬜")
+                        <i class="bi @(todo.IsComplete ? "bi-check-square-fill text-success" : "bi-square")"></i>
                     </button>
                 </form>
 
