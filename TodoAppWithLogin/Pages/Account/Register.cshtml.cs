@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+using TodoAppWithLogin.Helpers;
 using TodoAppWithLogin.Models;
 
 namespace TodoAppWithLogin.Pages.Account
@@ -71,6 +73,7 @@ namespace TodoAppWithLogin.Pages.Account
 
             if (result.Succeeded)
             {
+                await _userManager.AddClaimAsync(user, new Claim(CustomClaim.FirstName, user.FirstName));
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return LocalRedirect(returnUrl);
             }

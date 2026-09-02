@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using TodoAppWithLogin.Data;
 using TodoAppWithLogin.Models;
-using TodoAppWithLogin.Data; 
 
 namespace TodoAppWithLogin.Pages.Todos
 {
@@ -31,6 +31,8 @@ namespace TodoAppWithLogin.Pages.Todos
             [Required(ErrorMessage = "Please enter a todo.")]
             [StringLength(200)]
             public string Text { get; set; } = string.Empty;
+
+            public DateTime? DueDate { get; set; }
         }
 
         public async Task OnGetAsync()
@@ -53,7 +55,10 @@ namespace TodoAppWithLogin.Pages.Todos
             {
                 Description = Input.Text,
                 IsComplete = false,
-                UserId = userId!
+                UserId = userId!,
+                DueDate = Input.DueDate.HasValue
+        ? DateTime.SpecifyKind(Input.DueDate.Value, DateTimeKind.Utc)
+        : null
             };
 
             _context.Todos.Add(todo);

@@ -1,7 +1,9 @@
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+using TodoAppWithLogin.Helpers;
 using TodoAppWithLogin.Models; // adjust namespace to match your project
 
 namespace TodoAppWithLogin.Pages.Account
@@ -9,10 +11,12 @@ namespace TodoAppWithLogin.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<Users> _signInManager;
+        private readonly UserManager<Users> _userManager;
 
-        public LoginModel(SignInManager<Users> signInManager)
+        public LoginModel(SignInManager<Users> signInManager, UserManager<Users> userManager)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -47,6 +51,17 @@ namespace TodoAppWithLogin.Pages.Account
             {
                 return Page();
             }
+
+            var existingUser = await _userManager.FindByNameAsync(Input.Username);
+            if (existingUser == null)
+            {
+                ModelState.AddModelError("", "Invalid username or password. Please, try again");
+                return Page();
+            }
+
+            var existingUserClaims = await _userManager.GetClaimsAsync(existingUser);
+            if (!existingUserClaims.Any(c => c.Type == CustomClaim.FirstName))
+                await _userManager.AddClaimAsync(existingUser, new Claim(CustomClaim.FirstName, existingUser.FirstName));
 
             // lockoutOnFailure: true enables account lockout after repeated failed attempts
             var result = await _signInManager.PasswordSignInAsync(

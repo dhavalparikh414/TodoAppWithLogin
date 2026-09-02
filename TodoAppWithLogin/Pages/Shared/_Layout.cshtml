@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@inject UserManager<Users> UserManager;
+@{
+    var loggedInUser = await UserManager.GetUserAsync(User);
+    var userName = loggedInUser?.UserName;
+    var FirstName = loggedInUser?.FirstName;
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -40,10 +47,12 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
 
+
+
                         @if (User.Identity?.IsAuthenticated ?? false)
                         {
                             <li class="nav-item">
-                                <span class="nav-link text-dark">Hi, @User.Identity.Name!</span>
+                                <span class="nav-link text-dark">Hi, @FirstName!</span>
                             </li>
                             <li class="nav-item">
                                 <form method="post" asp-page="/Account/Logout" class="form-inline">

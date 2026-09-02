@@ -11,6 +11,7 @@
 <h4>Add a todo</h4>
 <form asp-page="Index" method="post" asp-page-handler="Add" class="d-flex gap-2 mb-4">
     <input asp-for="Input.Text" class="form-control flex-grow-1" placeholder="What needs to be done?" />
+    <input asp-for="Input.DueDate" type="datetime-local" class="form-control" style="max-width: 220px;" />
     <button type="submit" class="btn btn-primary text-nowrap">
         <i class="bi bi-plus-lg"></i>
         Add
@@ -54,11 +55,21 @@ else
                     </button>
                 </form> *@
 
+                <!-- Edit through the edit page -->
                 <a asp-page="/Todos/Edit" asp-route-id="@todo.Id" class="btn btn-link">
                     <i class="bi bi-pencil"></i>
                 </a>
 
+                <span class="me-2 @(todo.IsComplete ? "text-decoration-line-through text-muted" : "")">
                 @todo.Description
+                </span>
+                @if (todo.DueDate.HasValue)
+                {
+                    var isOverdue = !todo.IsComplete && todo.DueDate.Value < DateTime.Now;
+                    <span class="badge @(isOverdue ? "bg-danger" : "bg-secondary")">
+                        <i class="bi bi-clock"></i> @todo.DueDate.Value.ToString("dd MMM yyyy, h:mm tt")
+                    </span>
+                }
             </li>
         }
     </ul>

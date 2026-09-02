@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TodoAppWithLogin.Data;
@@ -55,10 +54,20 @@ namespace TodoAppWithLogin
              * not just for this one OAuth flow.
              */
 
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            app.Use((context, next) =>
             {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+                context.Request.Scheme = "https";
+                return next();
             });
+
+            //var forwardedHeadersOptions = new ForwardedHeadersOptions
+            //{
+            //    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            //};
+            //forwardedHeadersOptions.KnownIPNetworks.Clear();
+            //forwardedHeadersOptions.KnownProxies.Clear();
+
+            //app.UseForwardedHeaders(forwardedHeadersOptions);
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -72,9 +81,19 @@ namespace TodoAppWithLogin
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
+            app.MapGet("/debug-headers", (HttpContext context) =>
+            {
+                var headers = context.Request.Headers
+                    .Select(h => $"{h.Key}: {h.Value}")
+                    .OrderBy(h => h);
+                return string.Join("\n", headers);
+            });
+
             app.MapStaticAssets();
+
             app.MapRazorPages()
                .WithStaticAssets();
 

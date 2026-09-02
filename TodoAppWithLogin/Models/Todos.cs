@@ -1,11 +1,4 @@
-﻿using System;
-using System;
-using System.Collections.Generic;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace TodoAppWithLogin.Models
 {
@@ -14,14 +7,16 @@ namespace TodoAppWithLogin.Models
         [Key]
         public int Id { get; set; }
 
-       public string Description { get; set; }
+        public string Description { get; set; }
 
-       public bool IsComplete { get; set; } = false;
+        public bool IsComplete { get; set; } = false;
 
         // Foreign key
-        public string  UserId { get; set; }
+        public string UserId { get; set; }
 
         //Navigation properties
         public Users User { get; set; }
+
+        public DateTime? DueDate { get; set; }   // nullable — due date is optional
     }
 }
