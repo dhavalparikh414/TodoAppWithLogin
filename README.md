@@ -18,7 +18,7 @@ A simple, secure todo list app built with ASP.NET Core Razor Pages. Sign up, log
 
 | Layer | Technology |
 |---|---|
-| Framework | ASP.NET Core Razor Pages (.NET 8) |
+| Framework | ASP.NET Core Razor Pages (.NET 10) |
 | Auth | ASP.NET Core Identity + Google OAuth |
 | Database | PostgreSQL (via Entity Framework Core / Npgsql) |
 | Hosting | AWS Elastic Beanstalk |
@@ -112,9 +112,8 @@ Connection strings and OAuth secrets are set as Elastic Beanstalk environment pr
 ## Roadmap
 
 - [x] Google OAuth sign-in
-- [ ] GitHub OAuth sign-in
 - [ ] Forgot password / email-based password reset
-- [ ] Nicer inline todo editing
+
 
 ## License
 
