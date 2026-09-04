@@ -39,6 +39,11 @@ namespace TodoAppWithLogin.Pages.Account
             public string Username { get; set; } = string.Empty;
 
             [Required]
+            [EmailAddress]
+            [Display(Name = "Email")]
+            public string Email { get; set; } = string.Empty;
+
+            [Required]
             [DataType(DataType.Password)]
             public string Password { get; set; } = string.Empty;
 
@@ -66,7 +71,9 @@ namespace TodoAppWithLogin.Pages.Account
             {
                 UserName = Input.Username,
                 FirstName = Input.FirstName,
-                LastName = Input.LastName
+                LastName = Input.LastName,
+                Email = Input.Email,
+                EmailConfirmed = true
             };
 
             var result = await _userManager.CreateAsync(user, Input.Password);

@@ -23,6 +23,10 @@
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
 
+            <p class="mt-2">
+                <a asp-page="/Account/ForgotPassword">Forgot your password?</a>
+            </p>
+
             <div class="form-group form-check mb-3">
                 <input asp-for="Input.RememberMe" class="form-check-input" />
                 <label asp-for="Input.RememberMe" class="form-check-label"></label>

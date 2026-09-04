@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TodoAppWithLogin.Data;
 using TodoAppWithLogin.Models;
+using TodoAppWithLogin.Services;
 namespace TodoAppWithLogin
 {
     public class Program
@@ -19,8 +20,10 @@ namespace TodoAppWithLogin
             {
                 options.Password.RequiredLength = 6;
                 options.Password.RequireNonAlphanumeric = false; // relax defaults as you like
+                options.User.RequireUniqueEmail = true;
             })
-    .AddEntityFrameworkStores<AppDbContext>();
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
 
             // Add Authentication
 
@@ -31,6 +34,9 @@ namespace TodoAppWithLogin
         options.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
         options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
     });
+
+            // AWS SES Service
+            builder.Services.AddScoped<IEmailSender, SesEmailSender>();
 
             // Add services to the container.
             builder.Services.AddRazorPages();
