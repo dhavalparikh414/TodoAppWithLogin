@@ -35,8 +35,16 @@ namespace TodoAppWithLogin
         options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
     });
 
-            // AWS SES Service
-            builder.Services.AddScoped<IEmailSender, SesEmailSender>();
+            //Brevo's transactional email API is a straightforward REST endpoint,
+            //so we don't need any special SDK — plain HttpClient works cleanly.
+
+            builder.Services.AddHttpClient();
+
+            // Email Sending Service
+            builder.Services.AddScoped<IEmailSender, BrevoEmailSender>();
+            //builder.Services.AddScoped<IEmailSender, SesEmailSender>();
+            //builder.Services.AddScoped<IEmailSender, SendGridEmailSender>();
+
 
             // Add services to the container.
             builder.Services.AddRazorPages();
