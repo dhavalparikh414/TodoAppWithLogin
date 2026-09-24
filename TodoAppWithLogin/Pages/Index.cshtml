@@ -1,24 +1,48 @@
-﻿@page
+@page
 @model IndexModel
 @{
-	ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Welcome";
 }
 
-@* Welcome to the TODO List App *@
-<div class="text-center" style="margin-top: 80px; margin-bottom: 25px;">
+@section Styles {
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+}
 
-	<h1>Welcome to the TODO App</h1>
-	<p class="lead">Organize your day. Stay productive.</p>
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-copy">
+            <h1>Get it out of<br>your head.<br><span>Onto your list.</span></h1>
+            <p class="hero-sub">TodoApp keeps track of what's next, so you don't have to. Add a task, set a time, forget it until it matters again.</p>
+            <div class="hero-actions">
+                <a asp-page="/Account/Login" class="btn-hero btn-hero-primary">Log in</a>
+                <a asp-page="/Account/Register" class="btn-hero btn-hero-ghost">Create an account</a>
+            </div>
+        </div>
 
-	<a class="btn btn-primary btn-lg"  href="/Account/Login">Login</a>
-</div>
+        <div class="hero-card" aria-hidden="true">
+            <div class="mock-todo mock-checked">
+                <span class="mock-check">✓</span>
+                <span class="mock-text">Book dentist appointment</span>
+            </div>
+            <div class="mock-todo">
+                <span class="mock-box"></span>
+                <span class="mock-text">Apply for passport</span>
+                <span class="mock-chip mock-chip-warn">Due tomorrow</span>
+            </div>
+            <div class="mock-todo">
+                <span class="mock-box"></span>
+                <span class="mock-text">Pick up groceries</span>
+                <span class="mock-chip">Today, 6:00 PM</span>
+            </div>
+            <div class="mock-todo mock-checked">
+                <span class="mock-check">✓</span>
+                <span class="mock-text">Pay electricity bill</span>
+            </div>
+        </div>
+    </div>
+</section>
 
-@* New user section *@
-<div class="text-center">
-	<p class="lead"> New to the app? <a href="/Account/Register">Sign up</a> now!</p>
-</div>
-
-<!-- Scrolling motivational quotes banner -->
 <div class="quote-marquee">
     <div class="quote-marquee-track">
         <span class="quote-item">"The secret of getting ahead is getting started." — Mark Twain</span>
@@ -30,7 +54,6 @@
         <span class="quote-item">"Done is better than perfect."</span>
         <span class="quote-item">"Small daily improvements lead to staggering long-term results."</span>
 
-        <!-- duplicate set for seamless looping -->
         <span class="quote-item">"The secret of getting ahead is getting started." — Mark Twain</span>
         <span class="quote-item">"Organizing is what you do before you do something, so that when you do it, it is not all mixed up." — A.A. Milne</span>
         <span class="quote-item">"Plan your work, then work your plan."</span>
@@ -43,11 +66,178 @@
 </div>
 
 <style>
+    :root {
+        --ink: #14132B;
+        --coral: #FF6B4A;
+        --amber: #FFC857;
+        --paper: #F7F6F3;
+    }
+
+    .hero {
+        background: var(--ink);
+        color: #fff;
+        padding: 4.5rem 1.5rem;
+    }
+
+    .hero-inner {
+        max-width: 1080px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 3.5rem;
+        flex-wrap: wrap;
+    }
+
+    .hero-copy {
+        flex: 1 1 380px;
+        min-width: 320px;
+    }
+
+    .hero-copy h1 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 700;
+        font-size: 3rem;
+        line-height: 1.08;
+        margin: 0 0 1.25rem;
+        letter-spacing: -0.01em;
+    }
+
+    .hero-copy h1 span {
+        color: var(--coral);
+    }
+
+    .hero-sub {
+        font-family: 'Inter', sans-serif;
+        font-size: 1.05rem;
+        line-height: 1.6;
+        color: #C7C5D9;
+        max-width: 34ch;
+        margin-bottom: 2rem;
+    }
+
+    .hero-actions {
+        display: flex;
+        gap: 0.9rem;
+        flex-wrap: wrap;
+    }
+
+    .btn-hero {
+        font-family: 'Inter', sans-serif;
+        font-weight: 500;
+        font-size: 0.95rem;
+        padding: 0.8rem 1.6rem;
+        border-radius: 8px;
+        text-decoration: none;
+        display: inline-block;
+        transition: transform 0.15s ease, background-color 0.15s ease;
+    }
+
+    .btn-hero-primary {
+        background: var(--coral);
+        color: var(--ink);
+    }
+
+    .btn-hero-primary:hover {
+        background: #ff8065;
+        transform: translateY(-1px);
+        color: var(--ink);
+    }
+
+    .btn-hero-ghost {
+        border: 1px solid #46445F;
+        color: #fff;
+    }
+
+    .btn-hero-ghost:hover {
+        border-color: #7c7a99;
+        color: #fff;
+        transform: translateY(-1px);
+    }
+
+    .hero-card {
+        flex: 1 1 420px;
+        min-width: 340px;
+        max-width: 480px;
+        background: #FFFBF2;
+        border-radius: 18px;
+        padding: 2rem 1.9rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        box-shadow: 0 30px 70px -18px rgba(0,0,0,0.55);
+        transform: rotate(-1.2deg);
+    }
+
+    .mock-todo {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        font-family: 'Inter', sans-serif;
+        font-size: 1.08rem;
+        flex-wrap: wrap;
+    }
+
+    .mock-box {
+        width: 22px;
+        height: 22px;
+        border: 2px solid #D8D2C4;
+        border-radius: 6px;
+        flex-shrink: 0;
+    }
+
+    .mock-check {
+        width: 22px;
+        height: 22px;
+        border-radius: 6px;
+        background: var(--coral);
+        color: #fff;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .mock-checked .mock-text {
+        color: #B0A99A;
+        text-decoration: line-through;
+    }
+
+    .mock-text {
+        color: var(--ink);
+        font-weight: 500;
+    }
+
+    .mock-chip {
+        margin-left: auto;
+        font-size: 0.78rem;
+        padding: 0.28rem 0.7rem;
+        border-radius: 999px;
+        background: #EFE9DA;
+        color: #6B6353;
+        white-space: nowrap;
+    }
+
+    .mock-chip-warn {
+        background: var(--coral);
+        color: #fff;
+    }
+
+    @@media (max-width: 576px) {
+        .hero {
+            padding: 3rem 1.25rem;
+        }
+
+        .hero-copy h1 {
+            font-size: 2.2rem;
+        }
+    }
+
+    /* Quote marquee */
     .quote-marquee {
         overflow: hidden;
         white-space: nowrap;
-        background-color: #f8f9fa;
-        border-top: 1px solid #e9ecef;
+        background-color: var(--paper);
         border-bottom: 1px solid #e9ecef;
         padding: 12px 0;
     }
@@ -64,18 +254,14 @@
     .quote-item {
         display: inline-block;
         padding: 0 3rem;
+        font-family: 'Inter', sans-serif;
         font-style: italic;
         color: #495057;
         font-size: 0.95rem;
     }
 
     @@keyframes scroll-left {
-        from {
-            transform: translateX(0);
-        }
-
-        to {
-            transform: translateX(-50%);
-        }
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
     }
 </style>

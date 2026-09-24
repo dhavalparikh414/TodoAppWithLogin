@@ -32,6 +32,7 @@ namespace TodoAppWithLogin.Pages.Todos
             [StringLength(200)]
             public string Text { get; set; } = string.Empty;
 
+            [Required(ErrorMessage = "Please set a due date.")]
             public DateTime? DueDate { get; set; }
         }
 

@@ -22,6 +22,7 @@
             <div class="form-group mb-3">
                 <label asp-for="Input.DueDate"></label>
                 <input asp-for="Input.DueDate" type="datetime-local" class="form-control" />
+                <span asp-validation-for="Input.DueDate" class="text-danger small"></span>
             </div>
 
             <button type="submit" class="btn btn-primary">Save</button>

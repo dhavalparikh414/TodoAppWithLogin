@@ -9,10 +9,28 @@
 }
 
 <h4>Add a todo</h4>
-<form asp-page="Index" method="post" asp-page-handler="Add" class="d-flex flex-column flex-sm-row gap-2 mb-4">
+@* <form asp-page="Index" method="post" asp-page-handler="Add" class="d-flex flex-column flex-sm-row gap-2 mb-4">
     <input asp-for="Input.Text" class="form-control" placeholder="What needs to be done?" />
     <input asp-for="Input.DueDate" type="datetime-local" class="form-control" />
     <button type="submit" class="btn btn-primary text-nowrap">
+        <i class="bi bi-plus-lg"></i>
+        Add
+    </button>
+</form> *@
+
+<form asp-page="Index" method="post" asp-page-handler="Add" id="addTodoForm" class="d-flex flex-column flex-sm-row gap-2 mb-4 align-items-stretch align-items-sm-end">
+    <div class="flex-grow-1">
+        <label class="form-label small text-muted mb-1">What needs to be done?</label>
+        <input asp-for="Input.Text" id="todoText" class="form-control" placeholder="e.g. Renew car registration" />
+    </div>
+
+    <div>
+        <label class="form-label small text-muted mb-1">And by what date &amp; time?</label>
+        <input asp-for="Input.DueDate" id="todoDueDate" type="datetime-local" class="form-control" />
+        <span asp-validation-for="Input.DueDate" class="text-danger small"></span>
+    </div>
+
+    <button type="submit" id="addTodoBtn" class="btn btn-primary text-nowrap" disabled>
         <i class="bi bi-plus-lg"></i>
         Add
     </button>
@@ -102,3 +120,23 @@ else
         });
     </script>
 } *@
+
+  @section Scripts {
+    <script>
+        (function () {
+            const textInput = document.getElementById('todoText');
+            const dateInput = document.getElementById('todoDueDate');
+            const addBtn = document.getElementById('addTodoBtn');
+
+            function checkFields() {
+                const hasText = textInput.value.trim().length > 0;
+                const hasDate = dateInput.value.trim().length > 0;
+                addBtn.disabled = !(hasText && hasDate);
+            }
+
+            textInput.addEventListener('input', checkFields);
+            dateInput.addEventListener('input', checkFields);
+            dateInput.addEventListener('change', checkFields);
+        })();
+    </script>
+    }

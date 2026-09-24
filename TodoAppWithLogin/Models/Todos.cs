@@ -18,5 +18,7 @@ namespace TodoAppWithLogin.Models
         public Users User { get; set; }
 
         public DateTime? DueDate { get; set; }   // nullable — due date is optional
+
+        public bool ReminderSent { get; set; } = false;   // To know if the reminder email has been sent for this todo item
     }
 }

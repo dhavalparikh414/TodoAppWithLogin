@@ -32,6 +32,7 @@ namespace TodoAppWithLogin.Pages.Todos
             [StringLength(200)]
             public string Description { get; set; } = string.Empty;
 
+            [Required(ErrorMessage = "Please set a due date.")]
             public DateTime? DueDate { get; set; }
         }
 
@@ -73,10 +74,16 @@ namespace TodoAppWithLogin.Pages.Todos
                 return NotFound();
             }
 
+            if (todo.DueDate != Input.DueDate)
+            {
+                todo.ReminderSent = false;
+            }
+
             todo.Description = Input.Description;
             todo.DueDate = Input.DueDate.HasValue
     ? DateTime.SpecifyKind(Input.DueDate.Value, DateTimeKind.Utc)
     : null;
+
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/Todos/Index");

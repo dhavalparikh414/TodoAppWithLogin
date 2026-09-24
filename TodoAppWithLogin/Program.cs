@@ -111,6 +111,64 @@ namespace TodoAppWithLogin
             app.MapRazorPages()
                .WithStaticAssets();
 
+
+            // Email Reminder API Endpoint
+            app.MapPost("/api/send-reminders", async (
+    HttpContext context,
+    AppDbContext dbContext,
+    IEmailSender emailSender,
+    IConfiguration config) =>
+            {
+                var providedKey = context.Request.Headers["X-Reminder-Key"].ToString();
+                var expectedKey = config["ReminderJob:SecretKey"];
+
+                if (string.IsNullOrEmpty(expectedKey) || providedKey != expectedKey)
+                {
+                    return Results.Unauthorized();
+                }
+
+                var now = DateTime.UtcNow;
+                var soon = now.AddHours(24);
+
+                var dueTodos = await dbContext.Todos
+                    .Include(t => t.User)
+                    .Where(t => !t.IsComplete
+                             && !t.ReminderSent
+                             && t.DueDate != null
+                             && t.DueDate <= soon)
+                    .ToListAsync();
+
+                int sentCount = 0;
+
+                foreach (var todo in dueTodos)
+                {
+                    if (todo.User?.Email == null) continue;
+
+                    var isOverdue = todo.DueDate < now;
+                    var subject = isOverdue ? "Todo overdue: " + todo.Description : "Todo due soon: " + todo.Description;
+                    var body = $"<p>Hi {todo.User.FirstName},</p>" +
+                               $"<p>Your todo <strong>{todo.Description}</strong> " +
+                               $"{(isOverdue ? "was due on" : "is due on")} {todo.DueDate:dd MMM yyyy, h:mm tt}.</p>" +
+                               $"<p><a href='https://todoapp.com.au/Todos'>View your todos</a></p>";
+
+                    try
+                    {
+                        await emailSender.SendEmailAsync(todo.User.Email, subject, body);
+                        todo.ReminderSent = true;
+                        sentCount++;
+                    }
+                    catch
+                    {
+                        // Continue processing remaining todos even if one email fails
+                    }
+                }
+
+                await dbContext.SaveChangesAsync();
+
+                return Results.Ok(new { checkedCount = dueTodos.Count, sentCount });
+            });
+
+
             app.Run();
         }
     }
