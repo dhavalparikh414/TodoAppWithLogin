@@ -1,6 +1,6 @@
 # TodoApp
 
-A simple, secure todo list app built with ASP.NET Core Razor Pages. Sign up, log in (with a password or your Google account), and manage your personal todo list every user only ever sees their own items.
+A simple, secure todo list app built with ASP.NET Core Razor Pages. Sign up, log in (with a password or your Google account), and manage your personal todo list every user only ever sees their own items. The app sends email reminders before the todo item due date and time.
 
 **Live app:** [todoapp.com.au](https://todoapp.com.au)
 
@@ -112,7 +112,7 @@ Connection strings and OAuth secrets are set as Elastic Beanstalk environment pr
 ## Roadmap
 
 - [x] Google OAuth sign-in
-- [ ] Forgot password / email-based password reset
+- [x] Forgot password / email-based password reset
 
 
 ## License
