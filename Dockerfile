@@ -4,7 +4,7 @@ COPY . .
 # Adjust this path to wherever your .csproj sits relative to the repo root
 RUN dotnet publish TodoAppWithLogin/TodoAppWithLogin.csproj -c Release -o /app
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+FROM mcr.microsoft.com/dotnet/aspnet:10.0
 WORKDIR /app
 COPY --from=build /app .
 ENV ASPNETCORE_URLS=http://+:10000
