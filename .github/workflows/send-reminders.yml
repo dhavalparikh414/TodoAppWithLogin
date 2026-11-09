@@ -7,17 +7,22 @@ jobs:
   remind:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      APP_URL: ${{ vars.APP_URL }}
+      REMINDER_KEY: ${{ secrets.REMINDER_KEY }}
     steps:
+      - name: Check config
+        run: |
+          if [ -z "$APP_URL" ] || [ -z "$REMINDER_KEY" ]; then
+            echo "APP_URL variable or REMINDER_KEY secret is not set"; exit 1
+          fi
       - name: Wake the service
         run: |
           curl -sS -o /dev/null --max-time 90 \
             --retry 4 --retry-delay 15 --retry-all-errors \
-            https://todoapp.com.au/
+            "$APP_URL/"
       - name: Call reminder endpoint
-        env:
-          REMINDER_KEY: ${{ secrets.REMINDER_KEY }}
         run: |
-          if [ -z "$REMINDER_KEY" ]; then echo "REMINDER_KEY secret is not set"; exit 1; fi
           curl -fsS --max-time 60 --retry 2 --retry-delay 10 \
             -X POST -H "X-Reminder-Key: $REMINDER_KEY" \
-            https://todoapp.com.au/api/send-reminders
+            "$APP_URL/api/send-reminders"
