@@ -139,6 +139,7 @@ namespace TodoAppWithLogin
                     .ToListAsync();
 
                 int sentCount = 0;
+                var baseUrl = (config["App:BaseUrl"] ?? "").TrimEnd('/');
 
                 foreach (var todo in dueTodos)
                 {
@@ -149,7 +150,7 @@ namespace TodoAppWithLogin
                     var body = $"<p>Hi {todo.User.FirstName},</p>" +
                                $"<p>Your todo <strong>{todo.Description}</strong> " +
                                $"{(isOverdue ? "was due on" : "is due on")} {todo.DueDate:dd MMM yyyy, h:mm tt}.</p>" +
-                               $"<p><a href='https://todoapp.com.au/Todos'>View your todos</a></p>";
+                               $"<p><a href='{baseUrl}/Todos'>View your todos</a></p>";
 
                     try
                     {
@@ -157,9 +158,9 @@ namespace TodoAppWithLogin
                         todo.ReminderSent = true;
                         sentCount++;
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        // Continue processing remaining todos even if one email fails
+                        app.Logger.LogError(ex, "Reminder email failed for todo {Id}", todo.Id);
                     }
                 }
 

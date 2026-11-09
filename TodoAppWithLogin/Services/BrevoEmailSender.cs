@@ -9,9 +9,14 @@ namespace TodoAppWithLogin.Services
         private readonly string _apiKey;
         private readonly IHttpClientFactory _httpClientFactory;
 
+        private readonly string _fromAddress;
+        private readonly string _fromName;
+
         public BrevoEmailSender(IConfiguration config, IHttpClientFactory httpClientFactory)
         {
             _apiKey = config["Brevo:ApiKey"]!;
+            _fromAddress = config["App:EmailFromAddress"]!;
+            _fromName = config["App:EmailFromName"] ?? "TodoApp";
             _httpClientFactory = httpClientFactory;
         }
 
@@ -24,7 +29,7 @@ namespace TodoAppWithLogin.Services
 
             var payload = new
             {
-                sender = new { name = "TodoApp", email = "noreply@todoapp.com.au" },
+                sender = new { name = _fromName, email = _fromAddress },
                 to = new[] { new { email = toEmail } },
                 subject = subject,
                 htmlContent = htmlMessage
